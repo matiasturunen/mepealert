@@ -12,10 +12,8 @@
     "postinstall": "npm run build"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.12.13",
-    "@nuxt/http": "latest",
     "body-parser": "^1.19.0",
-    "express": "latest",
+    "express": "^4.17.1",
     "nuxt": "^2.15.4"
   },
   "devDependencies": {
