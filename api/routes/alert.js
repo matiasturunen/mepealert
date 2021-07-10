@@ -18,7 +18,7 @@ router.post('/alert/parse', (req, res) => {
     return;
   }
   const data = req.body.alert;
-  const pieces = data.split(/^([A-Za-zäöåÄÖÅ]+ V [A-ZÄÖÅ]{2} [0-9]+) ([0-9]{2,3}):([ABCD]):(.+) :(N[ ]?[0-9]{1,2}#[0-9]+\.[0-9]+) (E[ ]?[0-9]{1,2}#[0-9]+\.[0-9]+):(.*)$/);
+  const pieces = data.split(/^([A-Za-zäöåÄÖÅ]+ V [A-ZÄÖÅ]{2} [0-9]+) ([0-9]{2,3}):([ABCD]):(.+):(N[ ]?[0-9]{1,2}#[0-9]+\.[0-9]+) (E[ ]?[0-9]{1,2}#[0-9]+\.[0-9]+):(.*)$/);
 
   if (!pieces[1] || !pieces[2] || !pieces[3] || !pieces[4] || !pieces[5] || !pieces[6] || !pieces[7]) {
     res.sendStatus(400);

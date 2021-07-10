@@ -116,6 +116,8 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .title {
@@ -134,6 +136,8 @@ export default {
   font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 #map {
@@ -141,6 +145,8 @@ export default {
   height: 500px;
   margin-bottom: 10px;
   margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 #inputs_box {
