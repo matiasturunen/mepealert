@@ -11,9 +11,11 @@
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@babel/preset-env": "^7.12.13",
     "@nuxt/http": "latest",
+    "body-parser": "^1.19.0",
     "express": "latest",
-    "nuxt": "latest"
+    "nuxt": "^2.15.4"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",

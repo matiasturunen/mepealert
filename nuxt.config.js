@@ -18,7 +18,12 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' }
+    ],
+    script: [
+      { src: 'https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js', async: false },
+      { src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', async: false }
     ]
   },
 
