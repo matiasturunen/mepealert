@@ -19,11 +19,13 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' }
+      { rel: 'stylesheet', href: 'https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' },
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' }
     ],
     script: [
       { src: 'https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js', async: false },
-      { src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', async: false }
+      { src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', async: false },
+      { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js', async: false }
     ]
   },
 

@@ -1,24 +1,41 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        Mepe hälyparseri
-      </h1>
-      <div id="inputs_box">
-        <label for="input-alertText">Hälytyksen sisältö</label>
-        <textarea
-          v-model="alertText"
-          rows="6"
-          cols="40"
-        ></textarea>
-        <button @click="submitForm">
-          Näytä kartalla
-        </button>
+  <div class="container-lg">
+    <div class="row">
+      <div class="col">
+        <Logo />
       </div>
-      <div id="errors" v-if="errorMessage != ''">
-        <p>{{ errorMessage }}</p>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h1 class="title">
+          Mepe hälyparseri
+        </h1>
       </div>
+    </div>
+    <div class="row">
+      <div class="col" id="inputs_box">
+        <div class="mb-3">
+          <label for="input-alertText" class="form-label">Hälytyksen sisältö</label>
+          <textarea
+            v-model="alertText"
+            rows="6"
+            cols="40"
+            class="form-control"
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-primary" @click="submitForm">
+            Näytä kartalla
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="errors" class="row" v-if="errorMessage != ''">
+      <div class="col">
+        <p>{{ errorMessage }}</p>  
+      </div>
+    </div>
+    <div class="row">
       <div id="map_container">
         <div id='map'></div>
         <div id='details' v-if="missionCode!=''">
@@ -109,73 +126,34 @@ export default {
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
 
 #map {
   width: 100%;
-  height: 500px;
-  margin-bottom: 10px;
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
+  min-height: 250px;
 }
 
-#inputs_box {
-  margin-top: 20px;
+@media (max-width: 576px) {
+  #map {
+    height: 350px;
+  }
 }
 
-.marker {
-  position: absolute;
-  margin-top: -25px;
-  
-  border-radius: 50%;
-  border: 8px solid #0028FF;
-  width: 8px;
-  height: 8px;
+@media (max-width: 768) {
+  #map {
+    height: 420px;
+  }
 }
 
-.marker::after {
-  position: absolute;
-  content: '';
-  width: 0px;
-  height: 0px;
-  bottom: -28px;
-  left: -8px;
-  border: 8px solid transparent;
-  border-top: 17px solid #0028FF;
+@media (max-width: 992) {
+  #map {
+    height: 500px;
+  }
 }
 
-#details {
-  margin-bottom: 30px;
+@media (min-width: 992.02px) {
+  #map {
+    height: 600px;
+  }
 }
 
 </style>
