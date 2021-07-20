@@ -16,12 +16,14 @@
       <div class="col" id="inputs_box">
         <div class="mb-3">
           <label for="input-alertText" class="form-label">Hälytyksen sisältö</label>
-          <textarea
-            v-model="alertText"
-            rows="6"
-            cols="40"
-            class="form-control"
-          ></textarea>
+          <form>
+            <textarea
+              v-model="alertText"
+              rows="6"
+              cols="40"
+              class="form-control"
+            ></textarea>
+          </form>
         </div>
         <div class="mb-3">
           <button class="btn btn-primary" @click="submitForm">
@@ -36,13 +38,17 @@
       </div>
     </div>
     <div class="row">
-      <div id="map_container">
-        <div id='map'></div>
-        <div id='details' v-if="missionCode!=''">
-          <span><strong>Tehtäväkoodi:&nbsp;</strong>{{ missionCode }}</span></br>
-          <span><strong>Kuvaus:&nbsp;</strong>{{ description }}</span></br>
-          <span><strong>Yksiköt:&nbsp;</strong>{{ units }}</span></br>
-        </div>
+      <div id='map' class="col-md-9 col-sm-12"></div>
+      <div id='details' class="col-md-3 col-sm-12">
+        <strong>Tehtäväkoodi:&nbsp;</strong>{{ missionCode }}</br>
+        <strong>Kuvaus:&nbsp;</strong>{{ description }}</br>
+        <strong>Yksiköt:&nbsp;</strong>{{ units }}</br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr>
+        <small class="text-muted">&copy;&nbsp;Matias Turunen</small>
       </div>
     </div>
   </div>
@@ -92,6 +98,7 @@ export default {
         })
       }).then(response => response.json()).then(data => {
         console.log('RES', data)
+        $('.marker').remove();
         let el = document.createElement('div');
         el.className = 'marker';
 
@@ -106,7 +113,8 @@ export default {
 
         // Center map on marker
         this.map.flyTo({
-          center: [data.lon, data.lat]
+          center: [data.lon, data.lat],
+          zoom: 10
         });
 
         this.missionCode = data.missionCode
@@ -114,6 +122,7 @@ export default {
         this.description = data.description
       }).catch(err => {
         if(err) {
+          $('.marker').remove();
           console.error(err)
           if (err.status == 400) {
             this.errorMessage = 'Tarkista syöte'
@@ -154,6 +163,26 @@ export default {
   #map {
     height: 600px;
   }
+}
+
+.marker {
+  position: absolute;
+  margin-top: -25px;
+  
+  border-radius: 50%;
+  border: 8px solid #FF0000;
+  width: 8px;
+  height: 8px;
+}
+.marker::after {
+  position: absolute;
+  content: '';
+  width: 0px;
+  height: 0px;
+  bottom: -28px;
+  left: -8px;
+  border: 8px solid transparent;
+  border-top: 17px solid #FF0000;
 }
 
 </style>
