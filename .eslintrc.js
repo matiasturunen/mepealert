@@ -14,5 +14,13 @@ module.exports = {
   plugins: [
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+    'semi': 'off',
+    'no-undef': 'off',
+    'vue/require-v-for-key': 'off',
+    'eqeqeq': 'off',
+    'object-shorthand': 'off',
+    'vue/attributes-order': 'off',
+    'no-console': 'off'
+  }
 }

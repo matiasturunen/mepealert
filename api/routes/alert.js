@@ -2,6 +2,8 @@
 const { Router } = require('express')
 const bodyParser = require('body-parser')
 
+const dataValues = require('./data').dataValues;
+
 const router = Router()
 
 router.use(bodyParser.json())
@@ -10,6 +12,24 @@ const dm2dd = dm => {
   const deg = parseInt(dm[1]);
   const dec = parseFloat(dm[2])/60;
   return deg + dec;
+}
+
+const dd2dm = dd => {
+  const degs = parseInt(dd);
+  const mins = (dd - degs) * 60;
+
+  return degs+'#'+mins.toFixed(4);
+}
+
+const findAlertCodeData = code => {
+  for (var i = 0; i < dataValues.alertCodes.length; i++) {
+    const c = dataValues.alertCodes[i];
+    if (c.value == code) {
+      return c;
+    }
+  }
+
+  return null;
 }
 
 router.post('/alert/parse', (req, res) => {
@@ -39,14 +59,59 @@ router.post('/alert/parse', (req, res) => {
   const lat = dm2dd(rawLat.split(latLonSplitter));
   const lon = dm2dd(rawLon.split(latLonSplitter));
 
+  const acData = findAlertCodeData(pieces[2]);
+  let missionDescription = '';
+  if (acData != null) {
+    missionDescription = acData.text;
+  }
+
   console.log('Parse done!');
 
   res.json({
     lat: lat,
     lon: lon,
     missionCode: missionCode,
+    missionDescription: missionDescription,
     description: description,
     units: units
+  });
+});
+
+router.post('/alert/generate', (req, res) => {
+  console.log(req.body);
+  if (!req.body.code 
+    || !req.body.units
+    || !req.body.message
+    || !req.body.urgency
+    || !req.body.coordinates
+    || !req.body.prefix
+  ) {
+    res.sendStatus(400);
+    return 400;
+  }
+
+  console.log('Started generate...');
+
+  // Alert starts with prefix
+  let alert = req.body.prefix.trim();
+
+  // Next is alert code and urgency
+  alert += ' '+req.body.code+':'+req.body.urgency;
+
+  // Then message 
+  alert += ':'+req.body.message.trim()
+
+  // Coordinates, need to convert first...
+  const lat = dd2dm(req.body.coordinates.lat);
+  const lng = dd2dm(req.body.coordinates.lng);
+  alert += ':N '+lat+' E '+lng;
+
+  // Units
+  const units = req.body.units.join(', ');
+  alert += ':'+units;
+
+  res.json({
+    alert: alert
   });
 });
 

@@ -6,9 +6,11 @@ const app = express()
 
 // Require API routes
 const alert = require('./routes/alert')
+const datas = require('./routes/data')
 
 // Import API Routes
 app.use(alert)
+app.use(datas)
 
 
 // Export express app

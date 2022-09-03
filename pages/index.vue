@@ -34,15 +34,21 @@
     </div>
     <div id="errors" class="row" v-if="errorMessage != ''">
       <div class="col">
-        <p>{{ errorMessage }}</p>  
+        <p>{{ errorMessage }}</p>
       </div>
     </div>
     <div class="row">
       <div id='map' class="col-md-9 col-sm-12"></div>
       <div id='details' class="col-md-3 col-sm-12">
         <strong>Tehtäväkoodi:&nbsp;</strong>{{ missionCode }}</br>
+        <strong>Tehtäväkuvaus:&nbsp;</strong>{{ missionDescription }}</br>
         <strong>Kuvaus:&nbsp;</strong>{{ description }}</br>
         <strong>Yksiköt:&nbsp;</strong>{{ units }}</br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <Navigation />
       </div>
     </div>
     <div class="row">
@@ -63,22 +69,23 @@ export default {
       map: {},
       description: '',
       units: '',
-      missionCode: ''
+      missionCode: '',
+      missionDescription: ''
     }
   },
   mounted: async function () {
-    const atRes = await fetch('/api/token', {
+    await fetch('/api/token', {
       method: 'GET'
-    }).then(response => response.json()).then(data => {
+    }).then(response => response.json()).then((data) => {
       mapboxgl.accessToken = data.token
-      
+
       this.map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         zoom: 10,
         center: [28.3, 61.2]
       })
-    }).catch(err => {
+    }).catch((err) => {
       if (err) {
         console.error(err)
         this.errorMessage = ''
@@ -88,7 +95,7 @@ export default {
   methods: {
     async submitForm (evt) {
       evt.preventDefault()
-      const res = await fetch('/api/alert/parse', {
+      await fetch('/api/alert/parse', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -96,10 +103,10 @@ export default {
         body: JSON.stringify({
           alert: this.alertText
         })
-      }).then(response => response.json()).then(data => {
+      }).then(response => response.json()).then((data) => {
         console.log('RES', data)
         $('.marker').remove();
-        let el = document.createElement('div');
+        const el = document.createElement('div');
         el.className = 'marker';
 
         new mapboxgl.Marker(el)
@@ -108,7 +115,7 @@ export default {
 
         // Scroll to map
         $([document.documentElement, document.body]).animate({
-          scrollTop: $("#map").offset().top -10
+          scrollTop: $('#map').offset().top - 10
         }, 1500);
 
         // Center map on marker
@@ -120,8 +127,9 @@ export default {
         this.missionCode = data.missionCode
         this.units = data.units
         this.description = data.description
-      }).catch(err => {
-        if(err) {
+        this.missionDescription = data.missionDescription
+      }).catch((err) => {
+        if (err) {
           $('.marker').remove();
           console.error(err)
           if (err.status == 400) {
@@ -168,7 +176,6 @@ export default {
 .marker {
   position: absolute;
   margin-top: -25px;
-  
   border-radius: 50%;
   border: 8px solid #FF0000;
   width: 8px;
