@@ -20,7 +20,7 @@
               <div class="row">
                 <div class="col">
                   <label for="input-alertPrefix" class="form-label">Prefixi</label>
-                  <input type="text" name="input-alertPrefix" id="input-alertPrefix" v-model="alertPrefix">
+                  <input type="text" name="input-alertPrefix" id="input-alertPrefix" v-model="alertPrefix" placeholder="HÄLYTYS V EK 108">
                 </div>
               </div>
             </div>
@@ -28,7 +28,7 @@
               <div class="row">
                 <div class="col">
                   <label for="input-alertMessage" class="form-label">Kuvaus</label>
-                  <input type="text" name="input-alertMessage" id="input-alertMessage" v-model="alertMessage">
+                  <input type="text" name="input-alertMessage" id="input-alertMessage" v-model="alertMessage" placeholder="Lappeenranta, Tuulisukka">
                 </div>
               </div>
             </div>
@@ -70,17 +70,12 @@
                       </li>
                     </ul>
                   </div>
-                  <input type="text" name="input-alertUnit" id="input-alertUnit" v-model="alertUnit">
+                  <input type="text" name="input-alertUnit" id="input-alertUnit" v-model="alertUnit" placeholder="VEK108">
                   <a href="#" @click="addUnit">Lisää yksikkö</a>
                 </div>
               </div>
             </div>
           </form>
-        </div>
-        <div class="mb-3">
-          <button class="btn btn-primary" @click="submitForm">
-            Luo viesti
-          </button>
         </div>
       </div>
     </div>
@@ -91,8 +86,26 @@
     </div>
     <div class="row">
       <div id="map" class="col-md-9 col-sm-12" />
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary" @click="submitForm">
+          Luo viesti
+        </button>
+      </div>
+    </div>
+    <div class="row">
       <div id="details" class="col-md-3 col-sm-12">
-        <p><b>Hälyviesti:&nbsp;</b>{{ generatedAlert }}</p>
+        <strong>Hälyviesti:</strong><br>
+        <form>
+          <textarea cols="25" rows=6 readonly v-model="generatedAlert">
+          </textarea>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <Navigation />
       </div>
     </div>
     <div class="row">
@@ -168,7 +181,6 @@ export default {
           prefix: this.alertPrefix
         })
       }).then(response => response.json()).then((data) => {
-        console.log('GEN RES', data);
         this.generatedAlert = data.alert;
       }).catch((err) => {
         if (err) {
@@ -205,8 +217,10 @@ export default {
     },
     addUnit (evt) {
       evt.preventDefault();
-      this.alertUnits.push(this.alertUnit);
-      this.alertUnit = '';
+      if (this.alertUnit.length > 0) {
+        this.alertUnits.push(this.alertUnit);
+        this.alertUnit = '';
+      }
     }
   }
 }
@@ -217,6 +231,10 @@ export default {
 #map {
   width: 100%;
   min-height: 250px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 @media (max-width: 576px) {

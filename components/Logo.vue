@@ -1,5 +1,5 @@
 <template>
-  <nuxt-img class="banner-img" src="/mepealert_banner.png" />
+  <nuxt-img class="banner-img" :src="bannerpath" />
 </template>
 
 <style>
@@ -10,3 +10,17 @@
 }
 
 </style>
+
+<script>
+export default {
+  data: () => {
+    return {
+      bannerpath: '/mepealert_banner.png'
+    }
+  },
+  mounted: function () {
+    const path = this.$route.path.replace('/', '');
+    this.bannerpath = '/mepe' + path + '_banner.png';
+  }
+}
+</script>
