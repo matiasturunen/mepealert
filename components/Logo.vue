@@ -19,8 +19,12 @@ export default {
     }
   },
   mounted: function () {
-    const path = this.$route.path.replace('/', '');
-    this.bannerpath = '/mepe' + path + '_banner.png';
+    const path = this.$route.path;
+    let page = path.replace('/', '');
+    if (page == '') {
+      page = 'alert';
+    }
+    this.bannerpath = '/mepe' + page + '_banner.png';
   }
 }
 </script>

@@ -147,6 +147,10 @@ export default {
 #map {
   width: 100%;
   min-height: 250px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 @media (max-width: 576px) {
