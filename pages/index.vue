@@ -22,6 +22,7 @@
               rows="6"
               cols="40"
               class="form-control"
+              id="input-alertText"
             ></textarea>
           </form>
         </div>
@@ -38,12 +39,20 @@
       </div>
     </div>
     <div class="row">
-      <div id='map' class="col-md-9 col-sm-12"></div>
-      <div id='details' class="col-md-3 col-sm-12">
-        <strong>Tehtäväkoodi:&nbsp;</strong>{{ missionCode }}</br>
-        <strong>Tehtäväkuvaus:&nbsp;</strong>{{ missionDescription }}</br>
-        <strong>Kuvaus:&nbsp;</strong>{{ description }}</br>
-        <strong>Yksiköt:&nbsp;</strong>{{ units }}</br>
+      <div id="map" class="col-md-9 col-sm-12"></div>
+      <div id="details" class="col-md-3 col-sm-12">
+        <p>
+          <b>Tehtäväkoodi:&nbsp;</b>{{ missionCode }}
+        </p>
+        <p>
+          <b>Tehtäväkuvaus:&nbsp;</b>{{ missionDescription }}
+        </p>
+        <p>
+          <b>Kuvaus:&nbsp;</b>{{ description }}
+        </p>
+        <p>
+          <b>Yksiköt:&nbsp;</b>{{ units }}
+        </p>
       </div>
     </div>
     <div class="row">
