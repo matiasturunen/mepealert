@@ -3,109 +3,17 @@ const { Router } = require('express')
 const bodyParser = require('body-parser')
 
 const dataValues = require('./data').dataValues;
+const { parsePeLa, parsePSEH } = require('../parser')
 
 const router = Router()
 
 router.use(bodyParser.json())
-
-const dm2dd = dm => {
-  const deg = parseInt(dm[1]);
-  const dec = parseFloat(dm[2])/60;
-  return deg + dec;
-}
 
 const dd2dm = dd => {
   const degs = parseInt(dd);
   const mins = (dd - degs) * 60;
 
   return degs+'#'+mins.toFixed(4);
-}
-
-const findAlertCodeData = code => {
-  for (var i = 0; i < dataValues.alertCodes.length; i++) {
-    const c = dataValues.alertCodes[i];
-    if (c.value == code) {
-      return c;
-    }
-  }
-
-  return null;
-}
-
-const parsePeLa = message => {
-  const pieces = message.split(/^([A-Za-zäöåÄÖÅ]+ V [A-ZÄÖÅ]{2} [0-9]+) ([0-9]{2,3}):([ABCD]):(.+):(N[ ]?[0-9]{1,2}#[0-9]+\.[0-9]+) (E[ ]?[0-9]{1,2}#[0-9]+\.[0-9]+):(.*)$/);
-
-  if (!pieces[1] || !pieces[2] || !pieces[3] || !pieces[4] || !pieces[5] || !pieces[6] || !pieces[7]) {
-    console.error('Parse error!\nData was:',message);
-    return {
-      error: 400
-    }
-  }
-
-  const missionCode = pieces[2] + ' ' + pieces[3];
-  const description = pieces[4];
-  const rawLat = pieces[5];
-  const rawLon = pieces[6];
-  const units = pieces[7];
-
-  const latLonSplitter = /^[NE] ([0-9]+)#([0-9]+\.[0-9]+)$/;
-  const lat = dm2dd(rawLat.split(latLonSplitter));
-  const lon = dm2dd(rawLon.split(latLonSplitter));
-
-  const acData = findAlertCodeData(pieces[2]);
-  let missionDescription = '';
-  if (acData != null) {
-    missionDescription = acData.text;
-  }
-
-  console.log('Parse done!');
-
-  return {
-    lat: lat,
-    lon: lon,
-    missionCode: missionCode,
-    missionDescription: missionDescription,
-    description: description,
-    units: units
-  };
-}
-
-const parsePSEH = message => {
-  const pieces = message.split(/^\d{2}:\d{2}:\d{2}_\d{2}\.\d{2}\.\/(N[ ]?[0-9]{1,2}#[0-9]+\.[0-9]+) (E[ ]?[0-9]{1,2}#[0-9]+\.[0-9]+)\/([\w ,.-]+)\/([A-ZÄÖÅ0-9]+)\/([ABCD])\/([A-ZÄÅÖ]{3}\d{2,5})\/(.+)$/);
-
-  if (!pieces[1] || !pieces[2] || !pieces[3] || !pieces[4] || !pieces[5] || !pieces[6] || !pieces[7]) {
-    console.error('Parse error!\nData was:',message);
-    return {
-      error: 400
-    }
-  }
-
-  const missionCode = pieces[4] + ' ' + pieces[5];
-  const description = pieces[3] + ', ' + pieces[7];
-  const rawLat = pieces[1];
-  const rawLon = pieces[2];
-  const units = pieces[6];
-
-  const latLonSplitter = /^[NE] ([0-9]+)#([0-9]+\.[0-9]+)$/;
-  const lat = dm2dd(rawLat.split(latLonSplitter));
-  const lon = dm2dd(rawLon.split(latLonSplitter));
-
-  const acData = findAlertCodeData(pieces[4]);
-  let missionDescription = '';
-  if (acData != null) {
-    missionDescription = acData.text;
-  }
-
-  console.log('Parse done!');
-
-  return {
-    lat: lat,
-    lon: lon,
-    missionCode: missionCode,
-    missionDescription: missionDescription,
-    description: description,
-    units: units
-  };
 }
 
 router.post('/alert/parse', (req, res) => {

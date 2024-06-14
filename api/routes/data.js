@@ -158,7 +158,19 @@ const alertCodes = [
   { value: "581", text: "Eläintehtävä; eläimen pelastaminen", urgency: "ABC" }
 ];
 
+const findAlertCodeData = code => {
+  for (var i = 0; i < alertCodes.length; i++) {
+    const c = alertCodes[i];
+    if (c.value == code) {
+      return c;
+    }
+  }
+
+  return null;
+}
+
 module.exports = router;
 module.exports.dataValues = {
-  alertCodes
+  alertCodes,
+  findAlertCodeData
 }
