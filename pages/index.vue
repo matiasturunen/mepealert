@@ -103,6 +103,7 @@ export default {
   },
   methods: {
     async submitForm (evt) {
+      this.errorMessage = '';
       evt.preventDefault()
       await fetch('/api/alert/parse', {
         method: 'POST',
@@ -140,10 +141,8 @@ export default {
       }).catch((err) => {
         if (err) {
           $('.marker').remove();
-          console.error(err)
-          if (err.status == 400) {
-            this.errorMessage = 'Tarkista syöte'
-          }
+          // console.error(err);
+          this.errorMessage = 'Parsinnassa tapahtui virhe';
         }
       })
     }
@@ -203,6 +202,12 @@ export default {
   left: -8px;
   border: 8px solid transparent;
   border-top: 17px solid #FF0000;
+}
+
+#errors {
+  background-color: red;
+  color: #FFFFFF;
+  font-weight: bold;
 }
 
 </style>
