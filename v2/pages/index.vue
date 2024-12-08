@@ -102,8 +102,23 @@ export default {
     })
   },
   methods: {
-    async submitForm (evt) {
-      this.errorMessage = '';
+    
+  }
+}
+</script>
+
+<script setup>
+
+import { ref } from 'vue'
+
+const alertText = ref('')
+const errorMessage = ref('')
+const parsed = ref({})
+
+let map = {}
+
+const submitForm = async (evt) => {
+      errorMessage.value = '';
       evt.preventDefault()
       await fetch('/api/alert/parse', {
         method: 'POST',
@@ -111,10 +126,13 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          alert: this.alertText
+          alert: alertText.value
         })
       }).then(response => response.json()).then((data) => {
         console.log('RES', data)
+
+        parsed.value = data
+
         $('.marker').remove();
         const el = document.createElement('div');
         el.className = 'marker';
@@ -129,25 +147,34 @@ export default {
         }, 1500);
 
         // Center map on marker
-        this.map.flyTo({
+        map.flyTo({
           center: [data.lon, data.lat],
           zoom: 10
         });
 
-        this.missionCode = data.missionCode
-        this.units = data.units
-        this.description = data.description
-        this.missionDescription = data.missionDescription
       }).catch((err) => {
         if (err) {
           $('.marker').remove();
           // console.error(err);
-          this.errorMessage = 'Parsinnassa tapahtui virhe';
+          errorMessage.value = 'Parsinnassa tapahtui virhe';
         }
       })
     }
-  }
-}
+
+onMounted(async () => {
+  const { data } = await useFetch('/api/token')
+
+  mapboxgl.accessToken = data.token
+
+  map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    zoom: 10,
+    center: [28.3, 61.2]
+  })
+})
+
+
 </script>
 
 <style>

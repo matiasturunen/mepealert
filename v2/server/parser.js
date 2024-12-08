@@ -1,4 +1,4 @@
-const data = require('./routes/data').dataValues;
+import { alertCodes } from "./alertcodes";
 
 const dm2dd = dm => {
   const deg = parseInt(dm[1]);
@@ -20,7 +20,7 @@ const parseCoordinates = data => {
 	}
 }
 
-const parsePeLa = message => {
+export const parsePeLa = message => {
   const pieces = message.split(/^([A-Za-z0-9 åäöÅÄÖ]+) (\d{2,3}):([ABCD]):(.+):(N.+):(.+)/);
 
   mustHavePieces = [1,2,3,4,5,6];
@@ -61,7 +61,7 @@ const parsePeLa = message => {
   };
 }
 
-const parsePSEH = message => {
+export const parsePSEH = message => {
   const pieces = message.split(/.+\/(N.+)\/(.+)\/([A-Z0-9]+)\/([ABCD])\/(.+)\/(.+)/);
 
   mustHavePieces = [1,2,3,4,5,6];
@@ -102,8 +102,3 @@ const parsePSEH = message => {
   };
 }
 
-
-module.exports = {
-	parsePeLa,
-	parsePSEH
-}
