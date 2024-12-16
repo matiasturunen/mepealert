@@ -1,5 +1,4 @@
 <script setup>
-import parser from './pages/index.vue';
 
 </script>
 

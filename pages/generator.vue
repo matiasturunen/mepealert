@@ -2,7 +2,7 @@
   <div class="container-lg">
     <div class="row">
       <div class="col">
-        <Logo />
+        <Logo page="generator" />
       </div>
     </div>
     <div class="row">
@@ -167,7 +167,7 @@ export default {
   methods: {
     async submitForm (evt) {
       evt.preventDefault()
-      await fetch('/api/alert/generate', {
+      await fetch('/api/alert/generator', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -225,59 +225,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-#map {
-  width: 100%;
-  min-height: 250px;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-@media (max-width: 576px) {
-  #map {
-    height: 350px;
-  }
-}
-
-@media (max-width: 768) {
-  #map {
-    height: 420px;
-  }
-}
-
-@media (max-width: 992) {
-  #map {
-    height: 500px;
-  }
-}
-
-@media (min-width: 992.02px) {
-  #map {
-    height: 600px;
-  }
-}
-
-.marker {
-  position: absolute;
-  margin-top: -25px;
-  border-radius: 50%;
-  border: 8px solid #FF0000;
-  width: 8px;
-  height: 8px;
-}
-.marker::after {
-  position: absolute;
-  content: '';
-  width: 0px;
-  height: 0px;
-  bottom: -28px;
-  left: -8px;
-  border: 8px solid transparent;
-  border-top: 17px solid #FF0000;
-}
-
-</style>

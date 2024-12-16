@@ -6,7 +6,8 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        { href: 'https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css', rel: 'stylesheet' }
+        { href: 'https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css', rel: 'stylesheet' },
+        { href: 'styles.css', rel: 'stylesheet' }
       ],
       script: [
         { src: 'https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js', async: false },
