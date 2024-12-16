@@ -42,16 +42,16 @@
       <div id="map" class="col-md-9 col-sm-12"></div>
       <div id="details" class="col-md-3 col-sm-12">
         <p>
-          <b>Tehtäväkoodi:&nbsp;</b>{{ missionCode }}
+          <b>Tehtäväkoodi:&nbsp;</b>{{ parsed.missionCode }}
         </p>
         <p>
-          <b>Tehtäväkuvaus:&nbsp;</b>{{ missionDescription }}
+          <b>Tehtäväkuvaus:&nbsp;</b>{{ parsed.missionDescription }}
         </p>
         <p>
-          <b>Kuvaus:&nbsp;</b>{{ description }}
+          <b>Kuvaus:&nbsp;</b>{{ parsed.description }}
         </p>
         <p>
-          <b>Yksiköt:&nbsp;</b>{{ units }}
+          <b>Yksiköt:&nbsp;</b>{{ parsed.units }}
         </p>
       </div>
     </div>
@@ -68,44 +68,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data: () => {
-    return {
-      alertText: '',
-      errorMessage: '',
-      map: {},
-      description: '',
-      units: '',
-      missionCode: '',
-      missionDescription: ''
-    }
-  },
-  mounted: async function () {
-    await fetch('/api/token', {
-      method: 'GET'
-    }).then(response => response.json()).then((data) => {
-      mapboxgl.accessToken = data.token
-
-      this.map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        zoom: 10,
-        center: [28.3, 61.2]
-      })
-    }).catch((err) => {
-      if (err) {
-        console.error(err)
-        this.errorMessage = ''
-      }
-    })
-  },
-  methods: {
-    
-  }
-}
-</script>
 
 <script setup>
 
@@ -155,16 +117,17 @@ const submitForm = async (evt) => {
       }).catch((err) => {
         if (err) {
           $('.marker').remove();
-          // console.error(err);
+          console.error(err);
           errorMessage.value = 'Parsinnassa tapahtui virhe';
         }
       })
     }
 
 onMounted(async () => {
-  const { data } = await useFetch('/api/token')
+  const { data } = await $fetch('/api/token')
+  console.log('token', data.value.token)
 
-  mapboxgl.accessToken = data.token
+  mapboxgl.accessToken = data.value.token
 
   map = new mapboxgl.Map({
     container: 'map',

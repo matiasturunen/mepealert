@@ -1,4 +1,4 @@
-import { alertCodes } from "./alertcodes";
+import { alertCodes, findAlertCodeData } from "./alertcodes";
 
 const dm2dd = dm => {
   const deg = parseInt(dm[1]);
@@ -8,8 +8,8 @@ const dm2dd = dm => {
 
 const parseCoordinates = data => {
 	const coordinateParts = data.split(/N[ ]?(.+) E[ ]?(.+)/);
-	rawLat = coordinateParts[1];
-	rawLon = coordinateParts[2];
+	const rawLat = coordinateParts[1];
+	const rawLon = coordinateParts[2];
 
 	const latLonSplitter = /([0-9]+)[?#]([0-9]+\.[0-9]+)/;
 	const lat = dm2dd(rawLat.split(latLonSplitter));
@@ -23,7 +23,7 @@ const parseCoordinates = data => {
 export const parsePeLa = message => {
   const pieces = message.split(/^([A-Za-z0-9 åäöÅÄÖ]+) (\d{2,3}):([ABCD]):(.+):(N.+):(.+)/);
 
-  mustHavePieces = [1,2,3,4,5,6];
+  const mustHavePieces = [1,2,3,4,5,6];
   mustHavePieces.forEach(idx => {
   	if (!pieces[idx]) {
   		console.error('Parse error!\nData was:',message);
@@ -43,7 +43,7 @@ export const parsePeLa = message => {
   // Parse coordinates separately
   const { lat, lon } = parseCoordinates(coordinates);
 
-  const acData = data.findAlertCodeData(pieces[2]);
+  const acData = findAlertCodeData(pieces[2]);
   let missionDescription = '';
   if (acData != null) {
     missionDescription = acData.text;
@@ -64,7 +64,7 @@ export const parsePeLa = message => {
 export const parsePSEH = message => {
   const pieces = message.split(/.+\/(N.+)\/(.+)\/([A-Z0-9]+)\/([ABCD])\/(.+)\/(.+)/);
 
-  mustHavePieces = [1,2,3,4,5,6];
+  const mustHavePieces = [1,2,3,4,5,6];
   mustHavePieces.forEach(idx => {
   	if (!pieces[idx]) {
   		console.error('Parse error!\nData was:',message);

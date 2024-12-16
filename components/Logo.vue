@@ -1,5 +1,5 @@
 <template>
-  <nuxt-img class="banner-img" :src="bannerpath" />
+  <nuxt-img class="banner-img" :src="banner" />
 </template>
 
 <style>
@@ -11,20 +11,20 @@
 
 </style>
 
-<script>
-export default {
-  data: () => {
-    return {
-      bannerpath: '/mepealert_banner.png'
-    }
-  },
-  mounted: function () {
-    const path = this.$route.path;
-    let page = path.replace('/', '');
-    if (page == '') {
-      page = 'alert';
-    }
-    this.bannerpath = '/mepe' + page + '_banner.png';
-  }
-}
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+  page: 'string'
+})
+
+const alertBanner = '/mepealert_banner.png'
+const generatorBanner = '/mepegenerator_banner.png'
+
+const banner = computed(() => {
+  if (props.page == 'generator') return generatorBanner;
+  return alertBanner;
+})
+
 </script>
+ 

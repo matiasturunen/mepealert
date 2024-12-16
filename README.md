@@ -1,49 +1,75 @@
-<p align="center"><img width="328px" src="https://nuxtjs.org/logos/nuxt.svg"></p>
+# Nuxt Minimal Starter
 
+Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-# Nuxt.js with Express
+## Setup
 
-> [ExpressJS](http://expressjs.com/) + [Nuxt.js](https://nuxtjs.org) = :zap:
-
-Live Demo: [https://codesandbox.io/s/github/nuxt-community/express-template](https://codesandbox.io/s/github/nuxt-community/express-template)
-
-## Installation
-
-This is a template project, click on the green button "Use this template" at the top of this page and get started with GitHub :sparkles:
-
-One you cloned your repository, install the dependencies with:
+Make sure to install dependencies:
 
 ```bash
-yarn install # or npm install
+# npm
+npm install
+
+# pnpm
+pnpm install
+
+# yarn
+yarn install
+
+# bun
+bun install
 ```
 
-## ExpressJS Changes
+## Development Server
 
-- There is a  `api` directory with the root of your `api` server.
-- The `routes` directory is called `api/routes`.
+Start the development server on `http://localhost:3000`:
 
-## Commands
+```bash
+# npm
+npm run dev
 
-| Command | Description |
-|---------|-------------|
-| npm run dev | Start ExpressJS server in development with Nuxt.js in dev mode (hot reloading). Listen on [http://localhost:3000](http://localhost:3000). |
-| npm run build | Build the nuxt.js web application for production. |
-| npm start | Start ExpressJS server in production. |
+# pnpm
+pnpm dev
 
-## Examples
+# yarn
+yarn dev
 
-- [Handling Protected SSR Routes](https://github.com/nuxt/express/blob/master/protected-ssr-api.md)
+# bun
+bun run dev
+```
 
-## Documentation
+## Production
 
-- [ExpressJS](http://expressjs.com/en/guide/routing.html)
-- [Nuxt.js](https://nuxtjs.org/guide/)
-- [Vue.js](http://vuejs.org/guide/)
+Build the application for production:
 
-## Licenses
+```bash
+# npm
+npm run build
 
-- [ExpressJS license](https://github.com/expressjs/express/blob/master/LICENSE)
-- [NuxtJS license](https://github.com/nuxt/nuxt.js/blob/master/LICENSE.md)
-- [VueJS license](https://github.com/vuejs/vue/blob/master/LICENSE)
+# pnpm
+pnpm build
 
+# yarn
+yarn build
 
+# bun
+bun run build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm preview
+
+# yarn
+yarn preview
+
+# bun
+bun run preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
