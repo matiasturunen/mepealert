@@ -84,7 +84,7 @@ export const parsePSEH = message => {
   // Parse coordinates separately
   const { lat, lon } = parseCoordinates(coordinates);
 
-  const acData = data.findAlertCodeData(pieces[4]);
+  const acData = findAlertCodeData(pieces[4]);
   let missionDescription = '';
   if (acData != null) {
     missionDescription = acData.text;
